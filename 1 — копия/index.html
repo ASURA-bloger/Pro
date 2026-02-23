@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+<title>Тренажёр</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #eaeaea;
+}
+
+/* ===== ОБЩИЙ КОНТЕЙНЕР ===== */
+.wrapper {
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    background: url("img/Фон.webp") no-repeat center center;
+    background-size: cover;
+    overflow: hidden;
+    padding-top: 80px;
+}
+
+/* ===== ЛЕВАЯ ПАНЕЛЬ ===== */
+.left-panel {
+    position: absolute;
+    left: 550px;
+    top: 60px;
+    width: 320px;
+    height: 720px;
+    margin-top: 80px;
+    background: url("img/Левая панель.webp") no-repeat center center;
+    background-size: contain;
+}
+
+/* Статистика */
+.stats {
+    position: absolute;
+    top: 260px;
+    left: 75px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    font-size: 22px;
+    font-weight: 600;
+    color: #6b5a4a;
+}
+
+/* Кнопки внизу панели */
+.panel-buttons {
+    position: absolute;
+    bottom: 140px;
+    left: 20px;
+    display: flex;
+
+}
+
+.panel-btn {
+    width: 10px;
+    height: 0.1px;
+    margin-bottom: 35px;
+    border-radius: 14px;
+      background: linear-gradient(to bottom, #00cafcbe, #05bdf5);
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    transition: 0.2s ease;
+
+}
+
+.panel-btn:hover {
+    transform: translateY(-4px);
+}
+
+.panel-btn:active {
+    box-shadow:
+        inset 6px 6px 12px rgba(0,0,0,0.1),
+
+}
+
+/* ===== ОСНОВНОЕ ОКНО ===== */
+.OC{
+    position: absolute;
+    width: 700px;
+    margin-top: 160px;
+    left: 800px;
+}
+
+/* ===== ЦЕНТРАЛЬНЫЙ ЭКРАН ===== */
+.center-screen {
+    position: absolute;
+    left: 40%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 650px;
+}
+
+/* ===== ШАПКА ===== */
+.header {
+  position: relative;
+  padding: 30px 80px;
+
+}
+
+.header__container {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* ЛОГО */
+.logo img {
+
+  height: 45px;
+}
+
+/* МЕНЮ */
+.nav {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 25px;
+
+}
+
+.nav a {
+  text-decoration: none;
+  font-size: 14px;
+  padding: 14px 30px;
+  border-radius: 18px;
+  color: #5a4c3f;
+
+  background: #ebe5dd;
+
+  box-shadow:
+    8px 8px 16px rgba(0,0,0,0.08),
+    -8px -8px 16px rgba(255,255,255,0.8);
+
+  transition: 0.25s ease;
+}
+
+.nav a:hover {
+  transform: translateY(-4px);
+}
+
+.nav a:active {
+  box-shadow:
+    inset 6px 6px 12px rgba(0,0,0,0.1),
+    inset -6px -6px 12px rgba(255,255,255,0.8);
+}
+
+/* ИКОНКИ СПРАВА */
+.actions {
+  margin-left: auto;
+  display: flex;
+  gap: 18px;
+}
+
+.icon-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  border: none;
+  cursor: pointer;
+
+  background: #ebe5dd;
+
+  box-shadow:
+    8px 8px 16px rgba(0,0,0,0.08),
+    -8px -8px 16px rgba(255,255,255,0.8);
+
+  transition: 0.25s ease;
+}
+
+.icon-btn:hover {
+  transform: translateY(-4px);
+}
+
+/* ===== ОТВЕТЫ ===== */
+.answers {
+    position: absolute;
+    bottom: 180px;
+    left: 59%;
+    transform: translateX(-50%);
+    display: grid;
+    grid-template-columns: repeat(3, 150px);
+    gap: 10px;
+    padding-bottom: 160px;
+}
+
+.answer-btn {
+    width: 150px;
+    height: 55px;
+    border-radius: 20px;
+    border: none;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+
+    background: linear-gradient(to bottom, #f3d6c6, #e7b9a5);
+    box-shadow: 0 15px 25px rgba(0,0,0,0.2);
+    transition: all 0.2s ease;
+}
+
+.answer-btn:hover {
+    transform: translateY(-5px);
+}
+
+.correct {
+    background: linear-gradient(to bottom, #9be7b4, #5acb83);
+}
+.ret{
+width: 47px;
+height: 45px;
+margin-left: 60px;
+
+}
+.ret2{
+  width: 47px;
+  height: 45px;
+  margin-left: 110px;
+}
+/* ===== ПРИМЕР НА ЭКРАНЕ ===== */
+.task{
+    position:absolute;
+    padding-top: 80px;
+    /* координаты под твой макет */
+    top: 330px;
+    left: 51%;
+  
+    display:flex;
+    align-items:center;
+    gap:28px;
+
+    font-size:60px;
+    font-weight:700;
+    color:#3b2d1f;
+}
+
+.answer-box{
+    width:100px;
+    height:60px;
+    border-radius:16px;
+    background:#cfd8dc;
+    border:3px solid #5b4b3a;
+}
+/* ===== МОДАЛКА ===== */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal-content {
+    width: 600px;
+    padding: 40px;
+    border-radius: 25px;
+    background: #d9e6ef;
+    text-align: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-content h2 {
+    margin-bottom: 25px;
+    color: #3b2d1f;
+}
+
+.modal-content p {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.close-btn {
+    margin-top: 25px;
+    padding: 12px 35px;
+    border: none;
+    border-radius: 18px;
+    font-size: 18px;
+    cursor: pointer;
+    background: linear-gradient(to bottom, #f3d6c6, #e7b9a5);
+}
+
+
+/* ===== ИДЕАЛЬНЫЙ SCALE АДАПТИВ ===== */
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper {
+    transform-origin: top center;
+}
+
+</style>
+</head>
+
+<body>
+<!-- МОДАЛЬНОЕ ОКНО -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <h2 id="modal-title"></h2>
+    <div id="modal-body"></div>
+    <button class="close-btn" onclick="closeModal()">ПРИНЯТО</button>
+  </div>
+</div>
+<div class="wrapper">
+
+    <!-- ЛЕВАЯ ПАНЕЛЬ -->
+    <div class="left-panel">
+        <div class="stats">
+            <div>⏱ 12:36</div>
+            <div><img  src="/img/Subtract.png" alt=""></div>
+            <div><img  src="/img/Vector.png" alt=""></div>
+        </div>
+
+        <div class="panel-buttons">
+            <button class="panel-btn"><img class="ret"  src="/img/Group 2357.png" alt=""></button>
+            <button class="panel-btn"><img class="ret2" src="/img/Group 2356.png" alt=""></button>
+        </div>
+    </div>
+
+    <!-- ОСНОВНОЕ ОКНО -->
+  <img class="OC" src="img/Основное окно.webp" alt="">
+    <img class="center-screen" src="/img/Основное окно.webp alt=">
+    <div class="task">
+    <span>9</span>
+    <span>×</span>
+    <span>7</span>
+    <span>=</span>
+    <div class="answer-box"></div>
+</div>
+
+<header class="header">
+  <div class="header__container">
+
+    <div class="logo">
+      <img src="img/ЛОГО3-small 24.png" alt="Логотип">
+    </div>
+
+    <nav class="nav">
+      <a href="#">Тренажёры</a>
+      <a href="#">Тренировки</a>
+      <a href="#">Создать</a>
+      <a href="#">О проекте</a>
+    </nav>
+
+    <div class="actions">
+      <button class="icon-btn"><img src="img/12123.png" width="22"></button>
+      <button class="icon-btn"><img src="img/1212.png" width="22"></button>
+    </div>
+
+  </div>
+</header>
+
+<div class="answers">
+    <button class="answer-btn">49</button>
+    <button class="answer-btn">56</button>
+    <button class="answer-btn correct">63</button>
+    <button class="answer-btn">72</button>
+    <button class="answer-btn">81</button>
+    <button class="answer-btn">97</button>
+</div>
+
+
+<script>
+const modal = document.getElementById("modal");
+const modalTitle = document.getElementById("modal-title");
+const modalBody = document.getElementById("modal-body");
+
+const buttons = document.querySelectorAll(".panel-btn");
+
+buttons[0].addEventListener("click", function() {
+    modalTitle.innerText = "ПОДСКАЗКА";
+    modalBody.innerHTML = `
+        <p>7 × 6 = <b>42</b></p>
+        <p>7 × 8 = <b>56</b></p>
+    `;
+    modal.style.display = "flex";
+});
+
+buttons[1].addEventListener("click", function() {
+    modalTitle.innerText = "КАК ИГРАТЬ";
+    modalBody.innerHTML = `
+        <p>• Начинай с лёгких примеров.</p>
+        <p>• Занимайся 10–15 минут в день.</p>
+        <p>• Ошибся — ничего страшного.</p>
+        <p>• Играй регулярно 🙂</p>
+    `;
+    modal.style.display = "flex";
+});
+
+function closeModal() {
+    modal.style.display = "none";
+    function scaleLayout() {
+    const baseWidth = 1920;
+    const baseHeight = 1080;
+
+    const scaleX = window.innerWidth / baseWidth;
+    const scaleY = window.innerHeight / baseHeight;
+
+    const scale = Math.min(scaleX, scaleY);
+
+    const wrapper = document.querySelector(".wrapper");
+    wrapper.style.transform = `scale(${scale})`;
+}
+
+window.addEventListener("resize", scaleLayout);
+window.addEventListener("load", scaleLayout);
+}
+</script>
+</body>
+</html>
